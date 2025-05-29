@@ -45,5 +45,4 @@ public class AmbulanceController {
     public List<Ambulance> getAvailableAmbulances() {
         return ambulanceService.getAvailableAmbulances();
     }
-    
 }
