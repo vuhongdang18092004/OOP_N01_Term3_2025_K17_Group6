@@ -7,7 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HospitalManagerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HospitalManagerApplication.class, args);
+		try {
+			SpringApplication.run(HospitalManagerApplication.class, args);
+		} catch (Exception e) {
+			System.err.println("Error starting the application: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 }
