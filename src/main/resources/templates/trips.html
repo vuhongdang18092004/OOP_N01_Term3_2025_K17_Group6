@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Danh Sách Chuyến Đi</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+<h1>Danh Sách Chuyến Đi</h1>
+<a href="/">Quay lại Trang Chủ</a>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>ID Xe</th>
+    <th>Tài Xế</th>
+    <th>Bác Sĩ</th>
+    <th>Bệnh Nhân</th>
+    <th>Địa Điểm Đón</th>
+    <th>Bệnh Viện Đích</th>
+    <th>Trạng Thái</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="trip : ${trips}">
+    <td th:text="${trip.id}"></td>
+    <td th:text="${trip.ambulanceId}"></td>
+    <td th:text="${trip.driverName}"></td>
+    <td th:text="${trip.doctorName}"></td>
+    <td th:text="${trip.patientName}"></td>
+    <td th:text="${trip.pickupLocation}"></td>
+    <td th:text="${trip.hospitalDestination}"></td>
+    <td th:text="${trip.status}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

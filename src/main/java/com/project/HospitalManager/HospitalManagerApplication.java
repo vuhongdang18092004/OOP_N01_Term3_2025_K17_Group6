@@ -11,7 +11,7 @@ public class HospitalManagerApplication {
 			SpringApplication.run(HospitalManagerApplication.class, args);
 		} catch (Exception e) {
 			System.err.println("Error starting the application: " + e.getMessage());
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 

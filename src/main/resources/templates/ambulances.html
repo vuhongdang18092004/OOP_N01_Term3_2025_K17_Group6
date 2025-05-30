@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh Sách Xe Cứu Thương</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+<h1>Danh Sách Xe Cứu Thương</h1>
+<a href="/">Quay lại Trang Chủ</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Biển Số</th>
+        <th>Loại Xe</th>
+        <th>Sức Chứa</th>
+        <th>Máy Khử Rung</th>
+        <th>Số Giường</th>
+        <th>Số Ống Tiêm</th>
+        <th>Thiết Bị Y Tế</th>
+        <th>Trạng Thái</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ambulance : ${ambulances}">
+        <td th:text="${ambulance.id}"></td>
+        <td th:text="${ambulance.licensePlate}"></td>
+        <td th:text="${ambulance.type}"></td>
+        <td th:text="${ambulance.capacity}"></td>
+        <td th:text="${ambulance.hasDefibrillator}"></td>
+        <td th:text="${ambulance.bedCount}"></td>
+        <td th:text="${ambulance.syringeCount}"></td>
+        <td th:text="${ambulance.medicalEquipment}"></td>
+        <td th:text="${ambulance.status}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

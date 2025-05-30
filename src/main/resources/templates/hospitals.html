@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Danh Sách Bệnh Viện</title>
+  <style>
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+  </style>
+</head>
+<body>
+<h1>Danh Sách Bệnh Viện</h1>
+<a href="/">Quay lại Trang Chủ</a>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Tên</th>
+    <th>Địa Chỉ</th>
+    <th>Số Liên Lạc</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="hospital : ${hospitals}">
+    <td th:text="${hospital.id}"></td>
+    <td th:text="${hospital.name}"></td>
+    <td th:text="${hospital.address}"></td>
+    <td th:text="${hospital.contactNumber}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
