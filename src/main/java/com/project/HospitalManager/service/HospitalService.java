@@ -5,6 +5,8 @@ import com.project.HospitalManager.repository.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HospitalService {
 
@@ -25,6 +27,15 @@ public class HospitalService {
                     .orElseThrow(() -> new RuntimeException("Hospital not found with id: " + id));
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving hospital: " + e.getMessage());
+        }
+    }
+
+    public List<Hospital> getAllHospitals() {
+        try {
+            return hospitalRepository.findAll();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error retrieving all hospitals: " + e.getMessage());
         }
     }
 

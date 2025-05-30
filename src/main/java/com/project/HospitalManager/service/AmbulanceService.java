@@ -30,6 +30,15 @@ public class AmbulanceService {
         }
     }
 
+    public List<Ambulance> getAllAmbulances() {
+        try {
+            return ambulanceRepository.findAll();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error retrieving ambulances: " + e.getMessage());
+        }
+    }
+
     public Ambulance updateAmbulance(Ambulance ambulance) {
         try {
             return ambulanceRepository.save(ambulance);

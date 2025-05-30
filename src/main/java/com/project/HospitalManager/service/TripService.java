@@ -5,6 +5,8 @@ import com.project.HospitalManager.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TripService {
 
@@ -25,6 +27,15 @@ public class TripService {
                     .orElseThrow(() -> new RuntimeException("Trip not found with id: " + id));
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving trip: " + e.getMessage());
+        }
+    }
+
+    public List<Trip> getAllTrips() {
+        try {
+            return tripRepository.findAll();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error retrieving all trips: " + e.getMessage());
         }
     }
 
