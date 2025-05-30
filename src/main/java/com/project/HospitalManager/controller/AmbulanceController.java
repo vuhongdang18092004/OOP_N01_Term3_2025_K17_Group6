@@ -3,46 +3,79 @@ package com.project.HospitalManager.controller;
 import com.project.HospitalManager.model.Ambulance;
 import com.project.HospitalManager.service.AmbulanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/ambulances")
+@Controller
+@RequestMapping("/ambulances")
 public class AmbulanceController {
 
     @Autowired
     private AmbulanceService ambulanceService;
 
+    @GetMapping("/list")
+    public String listAmbulances(Model model) {
+        try {
+            List<Ambulance> ambulances = ambulanceService.getAllAmbulances();
+            model.addAttribute("ambulances", ambulances);
+            return "ambulances";
+        } catch (Exception e) {
+            model.addAttribute("error", "Lỗi khi tải danh sách xe cứu thương: " + e.getMessage());
+            return "error";
+        }
+    }
+
     @PostMapping
-    public Ambulance createAmbulance(@RequestBody Ambulance ambulance) {
-        return ambulanceService.createAmbulance(ambulance);
+    public ResponseEntity<Ambulance> createAmbulance(@RequestBody Ambulance ambulance) {
+        try {
+            Ambulance createdAmbulance = ambulanceService.createAmbulance(ambulance);
+            return ResponseEntity.ok(createdAmbulance);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @GetMapping("/{id}")
-    public Ambulance getAmbulance(@PathVariable int id) {
-        return ambulanceService.getAmbulance(id);
+    public ResponseEntity<Ambulance> getAmbulance(@PathVariable int id) {
+        try {
+            Ambulance ambulance = ambulanceService.getAmbulance(id);
+            return ResponseEntity.ok(ambulance);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PutMapping
-    public Ambulance updateAmbulance(@RequestBody Ambulance ambulance) {
-        return ambulanceService.updateAmbulance(ambulance);
+    public ResponseEntity<Ambulance> updateAmbulance(@RequestBody Ambulance ambulance) {
+        try {
+            Ambulance updatedAmbulance = ambulanceService.updateAmbulance(ambulance);
+            return ResponseEntity.ok(updatedAmbulance);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAmbulance(@PathVariable int id) {
-        ambulanceService.deleteAmbulance(id);
+    public ResponseEntity<Void> deleteAmbulance(@PathVariable int id) {
+        try {
+            ambulanceService.deleteAmbulance(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/available")
-    public List<Ambulance> getAvailableAmbulances() {
-        return ambulanceService.getAvailableAmbulances();
+    public ResponseEntity<List<Ambulance>> getAvailableAmbulances() {
+        try {
+            List<Ambulance> availableAmbulances = ambulanceService.getAvailableAmbulances();
+            return ResponseEntity.ok(availableAmbulances);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 }
