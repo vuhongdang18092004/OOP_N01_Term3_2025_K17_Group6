@@ -2,7 +2,6 @@
 
 ---
 
-
 # Báo Cáo Bài Tập Lớn: Ứng Dụng Web CarAmbulance
 
 ## Xây dựng ứng dụng quản lý hệ thống xe cứu thương
@@ -58,7 +57,7 @@
 
 ---
 
-## Nội dung 02: Sơ đồ Class Diagram
+## Sơ đồ Class Diagram
 
 Sơ đồ Class Diagram mô tả cấu trúc các lớp trong dự án, bao gồm các đối tượng chính (`Ambulance`, `Hospital`, `Trip`), các lớp chung (`ObjectGeneral`, `ObjectList`), và mối quan hệ giữa chúng.
 
@@ -76,7 +75,7 @@ Sơ đồ Class Diagram mô tả cấu trúc các lớp trong dự án, bao gồ
 
 ---
 
-## Nội dung 03: Sơ đồ Behavioural Diagram
+## Sơ đồ Behavioural Diagram
 
 ### Sequence Diagram
 Sequence Diagram minh họa quy trình tạo một chuyến đi (`POST /api/trips`), bao gồm tương tác giữa các thành phần: Client, Controller, Service, Repository, và Database.
@@ -93,99 +92,101 @@ Sequence Diagram minh họa quy trình tạo một chuyến đi (`POST /api/trip
 
 ---
 
-## Nội dung 04: Cập nhật code cho CRUD và kiểm thử
+## Cập nhật code cho CRUD và kiểm thử
 
 ### CRUD cho 03 đối tượng (Ambulance, Hospital, Trip)
 
 Dự án đã triển khai đầy đủ CRUD cho **Ambulance**, **Hospital**, và **Trip** thông qua các controller, service, và repository. Dưới đây là tóm tắt:
 
 1. **Ambulance**:
-   - **Controller**: `AmbulanceController.java` (artifact ID: `fe03c6b7-5344-4154-abc6-1ed25dc913a9`).
+   - **Controller**: `AmbulanceController.java`.
    - **Endpoints**:
-     - `POST /api/ambulances`: Tạo xe cứu thương.
-     - `GET /api/ambulances/{id}`: Lấy xe theo ID.
-     - `PUT /api/ambulances`: Cập nhật xe.
-     - `DELETE /api/ambulances/{id}`: Xóa xe.
-     - `GET /api/ambulances/available`: Lấy xe sẵn sàng.
-   - **Service**: `AmbulanceService.java` (artifact ID: `7e7e7b15-e17b-4e5c-9a2a-3c7a1b5b5e6e`) với try-catch.
+     - `POST /ambulances`: Tạo xe cứu thương.
+     - `GET /ambulances/{id}`: Lấy xe theo ID.
+     - `GET /ambulances/list`: Lấy toàn bộ danh sách xe cứu thương
+     - `PUT /ambulances`: Cập nhật xe.
+     - `DELETE /ambulances/{id}`: Xóa xe.
+     - `GET /ambulances/available`: Lấy xe sẵn sàng.
+   - **Service**: `AmbulanceService.java` với try-catch.
    - **Repository**: `AmbulanceRepository.java`.
 
 2. **Hospital**:
-   - **Controller**: `HospitalController.java` (artifact ID: `730eb565-0149-4c0b-8db3-31789e22d90f`).
+   - **Controller**: `HospitalController.java`.
    - **Endpoints**:
-     - `POST /api/hospitals`: Tạo bệnh viện.
-     - `GET /api/hospitals`: Lấy danh sách bệnh viện.
-     - `GET /api/hospitals/{id}`: Lấy bệnh viện theo ID.
-     - `PUT /api/hospitals`: Cập nhật bệnh viện.
-     - `DELETE /api/hospitals/{id}`: Xóa bệnh viện.
-   - **Service**: `HospitalService.java` (artifact ID: `56b75eac-6fda-44b8-a9c5-cf9607927415`).
+     - `POST /hospitals`: Tạo bệnh viện.
+     - `GET /hospitals/list`: Lấy danh sách bệnh viện.
+     - `GET /hospitals/{id}`: Lấy bệnh viện theo ID.
+     - `PUT /hospitals`: Cập nhật bệnh viện.
+     - `DELETE /hospitals/{id}`: Xóa bệnh viện.
+   - **Service**: `HospitalService.java`.
    - **Repository**: `HospitalRepository.java`.
 
 3. **Trip**:
-   - **Controller**: `TripController.java` (artifact ID: `8ff639d9-e1f8-49bb-9b91-bfc4f40c3ac6`).
+   - **Controller**: `TripController.java`.
    - **Endpoints**:
-     - `POST /api/trips`: Tạo chuyến đi.
-     - `GET /api/trips`: Lấy danh sách chuyến đi.
-     - `GET /api/trips/{id}`: Lấy chuyến đi theo ID.
-     - `PUT /api/trips`: Cập nhật chuyến đi.
-     - `DELETE /api/trips/{id}`: Xóa chuyến đi.
-   - **Service**: `TripService.java` (artifact ID: `2ea308fb-d186-47bc-891f-d4a417668394`).
+     - `POST /trips`: Tạo chuyến đi.
+     - `GET /trips/list`: Lấy danh sách chuyến đi.
+     - `GET /trips/{id}`: Lấy chuyến đi theo ID.
+     - `PUT /trips`: Cập nhật chuyến đi.
+     - `DELETE /trips/{id}`: Xóa chuyến đi.
+   - **Service**: `TripService.java`.
    - **Repository**: `TripRepository.java`.
 
-**Mã nguồn mẫu (CRUD trong ObjectList.java)**:
+**Mã nguồn mẫu**:
 ```java
-package com.project.CarAmbulance.common;
+// AmbulanceService.java
+public class AmbulanceService {
 
-import java.util.ArrayList;
-import java.util.List;
+    @Autowired
+    private AmbulanceRepository ambulanceRepository;
 
-public class ObjectList<T extends ObjectGeneral> {
-    private List<T> objects = new ArrayList<>();
-
-    public void create(T object) {
+    public Ambulance createAmbulance(Ambulance ambulance) {
         try {
-            objects.add(object);
+            return ambulanceRepository.save(ambulance);
         } catch (Exception e) {
-            throw new RuntimeException("Error creating object: " + e.getMessage());
+            throw new RuntimeException("Error creating ambulance: " + e.getMessage());
         }
     }
 
-    public T read(int id) {
+    public Ambulance getAmbulance(int id) {
         try {
-            return objects.stream()
-                    .filter(obj -> obj.getId() == id)
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Object not found with id: " + id));
+            return ambulanceRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Ambulance not found with id: " + id));
         } catch (Exception e) {
-            throw new RuntimeException("Error reading object: " + e.getMessage());
+            throw new RuntimeException("Error retrieving ambulance: " + e.getMessage());
         }
     }
 
-    public void update(T object) {
+    public List<Ambulance> getAllAmbulances() {
         try {
-            int index = objects.indexOf(objects.stream()
-                    .filter(obj -> obj.getId() == object.getId())
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException("Object not found")));
-            objects.set(index, object);
-        } catch (Exception e) {
-            throw new RuntimeException("Error updating object: " + e.getMessage());
+            return ambulanceRepository.findAll();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error retrieving ambulances: " + e.getMessage());
         }
     }
 
-    public void delete(int id) {
+    public Ambulance updateAmbulance(Ambulance ambulance) {
         try {
-            objects.removeIf(obj -> obj.getId() == id);
+            return ambulanceRepository.save(ambulance);
         } catch (Exception e) {
-            throw new RuntimeException("Error deleting object: " + e.getMessage());
+            throw new RuntimeException("Error updating ambulance: " + e.getMessage());
         }
     }
 
-    public List<T> getAll() {
+    public void deleteAmbulance(int id) {
         try {
-            return new ArrayList<>(objects);
+            ambulanceRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Error retrieving objects: " + e.getMessage());
+            throw new RuntimeException("Error deleting ambulance: " + e.getMessage());
+        }
+    }
+
+    public List<Ambulance> getAvailableAmbulances() {
+        try {
+            return ambulanceRepository.findByStatus("AVAILABLE");
+        } catch (Exception e) {
+            throw new RuntimeException("Error retrieving available ambulances: " + e.getMessage());
         }
     }
 }
@@ -193,98 +194,11 @@ public class ObjectList<T extends ObjectGeneral> {
 
 ### Kiểm thử (Test)
 
-Kiểm thử CRUD được thực hiện trong `TestObjectList.java` (artifact ID: `5088be92-aeba-477d-8f6d-38c72dea76f0`) cho 3 đối tượng: **Ambulance**, **Hospital**, **Trip**.
+Kiểm thử CRUD được thực hiện trong `TestObjectList.java` cho 3 đối tượng: **Ambulance**, **Hospital**, **Trip**.
 
 **Mã nguồn kiểm thử mẫu**:
 ```java
-package com.project.CarAmbulance.common;
 
-import com.project.CarAmbulance.model.Ambulance;
-import com.project.CarAmbulance.model.Hospital;
-import com.project.CarAmbulance.model.Trip;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-public class TestObjectList {
-
-    @Test
-    public void testAmbulanceCRUD() {
-        ObjectList<Ambulance> ambulanceList = new ObjectList<>();
-        Ambulance ambulance = new Ambulance();
-        ambulance.setId(1);
-        ambulance.setName("Ambulance 1");
-        ambulance.setLicensePlate("XYZ-123");
-        ambulance.setStatus("AVAILABLE");
-
-        // Create
-        ambulanceList.create(ambulance);
-        assertEquals(1, ambulanceList.getAll().size());
-
-        // Read
-        Ambulance retrieved = ambulanceList.read(1);
-        assertEquals("XYZ-123", retrieved.getLicensePlate());
-
-        // Update
-        ambulance.setStatus("IN_USE");
-        ambulanceList.update(ambulance);
-        assertEquals("IN_USE", ambulanceList.read(1).getStatus());
-
-        // Delete
-        ambulanceList.delete(1);
-        assertEquals(0, ambulanceList.getAll().size());
-    }
-
-    @Test
-    public void testHospitalCRUD() {
-        ObjectList<Hospital> hospitalList = new ObjectList<>();
-        Hospital hospital = new Hospital();
-        hospital.setId(1);
-        hospital.setName("City Hospital");
-
-        // Create
-        hospitalList.create(hospital);
-        assertEquals(1, hospitalList.getAll().size());
-
-        // Read
-        Hospital retrieved = hospitalList.read(1);
-        assertEquals("City Hospital", retrieved.getName());
-
-        // Update
-        hospital.setName("General Hospital");
-        hospitalList.update(hospital);
-        assertEquals("General Hospital", hospitalList.read(1).getName());
-
-        // Delete
-        hospitalList.delete(1);
-        assertEquals(0, hospitalList.getAll().size());
-    }
-
-    @Test
-    public void testTripCRUD() {
-        ObjectList<Trip> tripList = new ObjectList<>();
-        Trip trip = new Trip();
-        trip.setId(1);
-        trip.setAmbulanceId(1);
-        trip.setStatus("SCHEDULED");
-
-        // Create
-        tripList.create(trip);
-        assertEquals(1, tripList.getAll().size());
-
-        // Read
-        Trip retrieved = tripList.read(1);
-        assertEquals("SCHEDULED", retrieved.getStatus());
-
-        // Update
-        trip.setStatus("COMPLETED");
-        tripList.update(trip);
-        assertEquals("COMPLETED", tripList.read(1).getStatus());
-
-        // Delete
-        tripList.delete(1);
-        assertEquals(0, tripList.getAll().size());
-    }
-}
 ```
 
 **Chạy kiểm thử**:
@@ -300,7 +214,7 @@ public class TestObjectList {
 **Ghi chú**:
 - Các test sử dụng `ObjectList` để kiểm tra CRUD generic.
 - Các service test (`AmbulanceServiceTest.java`, `HospitalServiceTest.java`, `TripServiceTest.java`) kiểm tra CRUD với database MySQL.
-- Tất cả phương thức trong `ObjectList` và các service sử dụng try-catch để xử lý lỗi, đáp ứng **Yêu cầu 3.2**.
+- Tất cả phương thức trong `ObjectList` và các service sử dụng try-catch để xử lý lỗi.
 
 ---
 
@@ -330,8 +244,6 @@ public class TestObjectList {
 ---
 
 ## Kết luận
-
-Ứng dụng **CarAmbulance** đáp ứng đầy đủ các yêu cầu ban đầu, bao gồm quản lý xe cứu thương, bệnh viện, chuyến đi, và tích hợp giao diện web. Các chức năng CRUD được triển khai với xử lý lỗi try-catch, kiểm thử đầy đủ cho 3 đối tượng, và dữ liệu được lưu trữ trong MySQL. Các sơ đồ Class Diagram và Sequence Diagram cung cấp cái nhìn tổng quan về cấu trúc và luồng xử lý của hệ thống.
 
 
 ---
