@@ -61,7 +61,7 @@
 
 Sơ đồ Class Diagram mô tả cấu trúc các lớp trong dự án, bao gồm các đối tượng chính (`Ambulance`, `Hospital`, `Trip`), các lớp chung (`ObjectGeneral`, `ObjectList`), và mối quan hệ giữa chúng.
 
-- **Link ảnh**: [Class Diagram](https://i.imgur.com/sample-class-diagram.png)
+- **Link ảnh**: [Class Diagram](uploads/image/class_diagram.png)
 - **Hiển thị ảnh**:
   ![Class Diagram](https://i.imgur.com/sample-class-diagram.png)
 
