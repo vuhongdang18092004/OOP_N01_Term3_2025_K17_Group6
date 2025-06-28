@@ -61,9 +61,9 @@
 
 Sơ đồ Class Diagram mô tả cấu trúc các lớp trong dự án, bao gồm các đối tượng chính (`Ambulance`, `Hospital`, `Trip`), các lớp chung (`ObjectGeneral`, `ObjectList`), và mối quan hệ giữa chúng.
 
-- **Link ảnh**: [Class Diagram](uploads/image/class_diagram.png)
+- **Link ảnh**: [Class Diagram](https://github.com/vuhongdang18092004/OOP_N01_Term3_2025_K17_Group6/blob/fd09cf0afb4bdec82d8063acb8ef7849e0e032a6/uploads/image/class_diagram.png)
 - **Hiển thị ảnh**:
-  ![Class Diagram](https://i.imgur.com/sample-class-diagram.png)
+  ![Class Diagram](https://github.com/vuhongdang18092004/OOP_N01_Term3_2025_K17_Group6/blob/fd09cf0afb4bdec82d8063acb8ef7849e0e032a6/uploads/image/class_diagram.png)
 
 **Giải thích**:
 - `ObjectGeneral`: Lớp trừu tượng chứa thuộc tính chung (`id`, `name`).
@@ -80,9 +80,9 @@ Sơ đồ Class Diagram mô tả cấu trúc các lớp trong dự án, bao gồ
 ### Sequence Diagram
 Sequence Diagram minh họa quy trình tạo một chuyến đi (`POST /api/trips`), bao gồm tương tác giữa các thành phần: Client, Controller, Service, Repository, và Database.
 
-- **Link ảnh**: [Sequence Diagram](https://i.imgur.com/sample-sequence-diagram.png)
+- **Link ảnh**: [Sequence Diagram](https://github.com/vuhongdang18092004/OOP_N01_Term3_2025_K17_Group6/blob/dbcb15201756c0d9f9979c0e1986c4694d5e9cce/uploads/image/tao_chuyen_di.png)
 - **Hiển thị ảnh**:
-  ![Sequence Diagram](https://i.imgur.com/sample-sequence-diagram.png)
+  ![Sequence Diagram](https://github.com/vuhongdang18092004/OOP_N01_Term3_2025_K17_Group6/blob/dbcb15201756c0d9f9979c0e1986c4694d5e9cce/uploads/image/tao_chuyen_di.png)
 
 **Giải thích**:
 - Client gửi yêu cầu `POST /api/trips` với JSON của `Trip`.
